@@ -1,0 +1,56 @@
+﻿@{
+    var isLoggedIn = !string.IsNullOrEmpty(Context.Session.GetString("Username"));
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    @if (isLoggedIn)
+    {
+        <div class="d-flex">
+            <!-- Sidebar -->
+            <div class="bg-dark text-white p-3" style="width: 220px; height: 100vh;">
+                <h4 class="mb-4">LMS</h4>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link text-white" href="/Dashboard">📊 Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="/Lectures/Index">🎓 Lectures</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-controller="Assignment" asp-action="Index">📂 Assignments</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link text-white" href="/Submissions">📤 Submissions</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-controller="Subjects" asp-action="Index">📚 Subjects</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link text-white" href="/Attendance">📅 Attendance</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="/Tests">🧪 Tests</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="/Account/Profile">👤 Profile</a></li>
+                    <li class="nav-item mt-3"><a class="nav-link text-danger" href="/Account/Logout">🚪 Logout</a></li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="flex-grow-1">
+                <!-- Top Navbar -->
+                <nav class="navbar bg-light shadow-sm px-3">
+                    <span class="navbar-text">Logged in as: <strong>@Context.Session.GetString("Username")</strong></span>
+                </nav>
+
+                <div class="p-4">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- For unauthenticated users -->
+        <div class="container p-4">
+            @RenderBody()
+        </div>
+    }
+</body>
+</html>

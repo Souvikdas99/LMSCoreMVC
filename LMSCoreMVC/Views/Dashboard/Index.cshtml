@@ -1,0 +1,9 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    var username = Context.Session.GetString("Username");
+    var email = Context.Session.GetString("Email");
+}
+
+<div class="container mt-5">
+    <h2>Welcome, @username!</h2>
+</div>
