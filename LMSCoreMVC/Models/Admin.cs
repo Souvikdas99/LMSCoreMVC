@@ -2,7 +2,7 @@
 
 namespace LMSCoreMVC.Models
 {
-    public class User
+    public class Admin
     {
         public int Id { get; set; }
 
@@ -14,7 +14,5 @@ namespace LMSCoreMVC.Models
 
         [Required]
         public string Password { get; set; }
-
-        public string Role { get; set; } 
     }
 }
