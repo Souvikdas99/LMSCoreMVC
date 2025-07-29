@@ -1,0 +1,21 @@
+﻿@model LMSCoreMVC.Models.SubjectSelection
+@{
+    ViewData["Title"] = "Edit Subject Credit Points";
+}
+
+<div class="container mt-5">
+    <h3>Edit Credit Points</h3>
+    <form asp-action="EditSubject" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label>Subject Name</label>
+            <input class="form-control" asp-for="SubjectName" disabled />
+        </div>
+        <div class="mb-3">
+            <label>Credit Points</label>
+            <input class="form-control" asp-for="CreditPoints" />
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="/Admin/ManageSubjects" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

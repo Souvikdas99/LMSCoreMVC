@@ -40,25 +40,10 @@ app.UseSession();
 
 app.UseAuthorization();
 
+
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<LMSDbContext>();
-
-    if (!context.Subjects.Any())
-    {
-        context.Subjects.AddRange(
-            new Subjects { Name = "Data Structures", CreditPoints = 4 },
-            new Subjects { Name = "Operating Systems", CreditPoints = 3 },
-            new Subjects { Name = "Database Management Systems", CreditPoints = 4 },
-            new Subjects { Name = "Artificial Intelligence", CreditPoints = 3 },
-            new Subjects { Name = "Software Engineering", CreditPoints = 2 }
-        );
-
-        context.SaveChanges();
-    }
-}

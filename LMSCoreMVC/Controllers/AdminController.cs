@@ -60,10 +60,59 @@ namespace LMSCoreMVC.Controllers
             return View();
         }
 
+        public IActionResult ManageSubjects()
+        {
+            var groupedSubjects = _context.SubjectSelections
+                .AsEnumerable()
+                .GroupBy(s => s.Username)
+                .ToList();
+
+            ViewBag.Subjects = _context.SubjectSelections.ToList(); // All subject names used in dropdown
+
+            return View(groupedSubjects);
+        }
+
+        // POST: Update Subject
+        [HttpPost]
+        public IActionResult UpdateSubject(int id, string subjectName, int creditPoints)
+        {
+            var subject = _context.SubjectSelections.FirstOrDefault(s => s.Id == id);
+            if (subject == null)
+            {
+                TempData["Error"] = "Subject not found.";
+                return RedirectToAction("ManageSubjects");
+            }
+
+            subject.SubjectName = subjectName;
+            subject.CreditPoints = creditPoints;
+
+            _context.SubjectSelections.Update(subject);
+            _context.SaveChanges();
+
+            TempData["Success"] = "Subject updated successfully.";
+            return RedirectToAction("ManageSubjects");
+        }
+
+        // POST: Delete Subject
+        [HttpPost]
+        public IActionResult DeleteSubject(int id)
+        {
+            var subject = _context.SubjectSelections.FirstOrDefault(s => s.Id == id);
+            if (subject != null)
+            {
+                _context.SubjectSelections.Remove(subject);
+                _context.SaveChanges();
+                TempData["Success"] = "Subject deleted successfully.";
+            }
+            return RedirectToAction("ManageSubjects");
+        }
+
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("AdminEmail");
             return RedirectToAction("Login");
         }
+
+
     }
 }

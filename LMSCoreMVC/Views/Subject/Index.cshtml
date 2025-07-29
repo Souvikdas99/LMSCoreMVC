@@ -1,0 +1,55 @@
+﻿@model List<LMSCoreMVC.Models.SubjectSelection>
+@{
+    ViewData["Title"] = "Select Your Subjects";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-3">📚 Select Your MCA Subjects</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <form asp-action="Select" method="post" class="row g-3 mb-4">
+        <div class="col-md-6">
+            <label>Select Subject</label>
+            <select name="subjectName" class="form-select" required>
+                <option value="">-- Choose a Subject --</option>
+                <option value="Artificial Intelligence">Artificial Intelligence</option>
+                <option value="Web Technologies">Web Technologies</option>
+                <option value="Data Structures">Data Structures</option>
+                <option value="Computer Networks">Computer Networks</option>
+                <option value="Operating Systems">Operating Systems</option>
+                <option value="Machine Learning">Machine Learning</option>
+                <option value="Cyber Security">Cyber Security</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label>Credit Points</label>
+            <input type="number" name="creditPoints" class="form-control" required />
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+            <button class="btn btn-primary w-100">Add Subject</button>
+        </div>
+    </form>
+
+    <h4>Your Selected Subjects</h4>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Subject</th>
+                <th>Credit Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subject in Model)
+            {
+                <tr>
+                    <td>@subject.SubjectName</td>
+                    <td>@subject.CreditPoints</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

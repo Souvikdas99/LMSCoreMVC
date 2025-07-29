@@ -12,8 +12,7 @@ namespace LMSCoreMVC.Data
 
         public DbSet<Assignment> Assignments { get; set; }
 
-        public DbSet<Subjects> Subjects { get; set; }
-        public DbSet<StudentSubjects> StudentSubjects { get; set; }
+        public DbSet<SubjectSelection> SubjectSelections { get; set; }
 
 
     }
