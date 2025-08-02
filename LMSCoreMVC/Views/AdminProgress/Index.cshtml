@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "All Student Progress";
+    var progressList = ViewBag.StudentProgress;
+}
+
+<h2 class="mb-4">📊 All Student Progress</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Student</th>
+            <th>Assignments</th>
+            <th>Accepted</th>
+            <th>Rejected</th>
+            <th>Pending</th>
+            <th>Avg Test Score</th>
+            <th>Attendance (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in progressList)
+        {
+            <tr>
+                <td>@student.StudentName</td>
+                <td>@student.TotalAssignments</td>
+                <td style="color: green">@student.Accepted</td>
+                <td style="color: red">@student.Rejected</td>
+                <td>@student.Pending</td>
+                <td>@Math.Round((double)student.AverageScore, 2)</td>
+                <td>@student.AttendancePercentage %</td>
+            </tr>
+        }
+    </tbody>
+</table>
