@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Progress Dashboard";
+}
+
+<h2 class="mb-4">📈 Your Progress</h2>
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Assignments</h5>
+                <p>Total: @ViewBag.TotalAssignments</p>
+                <p style="color:lightgreen">Accepted: @ViewBag.Accepted</p>
+                <p style="color:pink">Rejected: @ViewBag.Rejected</p>
+                <p>Pending: @ViewBag.Pending</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Average Test Score</h5>
+                <p style="font-size: 24px">@ViewBag.AverageScore</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Attendance</h5>
+                <p style="font-size: 24px">@ViewBag.Attendance %</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -21,5 +21,12 @@ namespace LMSCoreMVC.Models
         public string TeacherName { get; set; }
 
         public string FilePath { get; set; }
+
+        [Required]
+        public string StudentName { get; set; }
+
+        public string Status { get; set; } = "Pending";
+
+        public DateTime SubmittedAt { get; set; }
     }
 }

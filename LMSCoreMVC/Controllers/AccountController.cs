@@ -48,6 +48,8 @@ namespace LMSCoreMVC.Controllers
             HttpContext.Session.SetString("Username", user.Username);
             HttpContext.Session.SetString("Email", user.Email);
             return RedirectToAction("Index", "Dashboard");
+
+            
         }
 
         public IActionResult Logout()

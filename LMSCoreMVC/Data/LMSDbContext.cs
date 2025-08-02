@@ -10,9 +10,15 @@ namespace LMSCoreMVC.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Admin> Admins { get; set; }
 
-        public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<Assignment> Assignment { get; set; }
 
         public DbSet<SubjectSelection> SubjectSelections { get; set; }
+
+        public DbSet<Attendance> Attendance { get; set; }
+
+        public DbSet<Test> Tests { get; set; }
+
+        public DbSet<TestResult> TestResults { get; set; }
 
 
     }

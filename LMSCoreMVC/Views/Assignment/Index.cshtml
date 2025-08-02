@@ -1,74 +1,55 @@
-﻿@model IEnumerable<LMSCoreMVC.Models.Assignment>
+﻿@model List<LMSCoreMVC.Models.Assignment>
 
-@{
-    ViewData["Title"] = "Assignment Submission";
+<h2>📄 Assignment Submissions</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
 }
 
-<div class="container mt-5">
-    <h2>Submit Assignment</h2>
+<a class="btn btn-primary mb-3" href="/Assignment/Submit">Submit New Assignment</a>
 
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-info">@TempData["Success"]</div>
-    }
-
-    <form asp-controller="Assignment" asp-action="Submit" method="post" enctype="multipart/form-data">
-        <div class="mb-3">
-            <label>Assignment Name</label>
-            <input type="text" name="AssignmentName" class="form-control" required />
-        </div>
-        <div class="mb-3">
-            <label>Subject</label>
-            <input type="text" name="Subject" class="form-control" required />
-        </div>
-        <div class="mb-3">
-            <label>Submission Date</label>
-            <input type="date" name="SubmissionDate" class="form-control" required />
-        </div>
-        <div class="mb-3">
-            <label>Teacher Name</label>
-            <input type="text" name="TeacherName" class="form-control" required />
-        </div>
-        <div class="mb-3">
-            <label>Upload File</label>
-            <input type="file" name="file" class="form-control" required />
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
-    <hr />
-
-    <h3>Submitted Assignments</h3>
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Assignment</th>
+            <th>Subject</th>
+            <th>Teacher</th>
+            <th>Submitted By</th>
+            <th>Status</th>
+            <th>Submitted At</th>
+            <th>File</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model)
+        {
             <tr>
-                <th>Assignment Name</th>
-                <th>Subject</th>
-                <th>Submission Date</th>
-                <th>Teacher</th>
-                <th>File</th>
+                <td>@a.AssignmentName</td>
+                <td>@a.Subject</td>
+                <td>@a.TeacherName</td>
+                <td>@a.StudentName</td>
+                <td>@a.Status</td>
+                <td>@a.SubmittedAt.ToString("dd MMM yyyy, hh:mm tt")</td>
+                <td>
+                    <a href="/Assignment/ViewFile?path=@a.FilePath" target="_blank">Download</a>
+                </td>
+                <td>
+                    <form asp-action="UpdateStatus" method="post">
+                        <input type="hidden" name="id" value="@a.Id" />
+                        <select name="status" class="form-control d-inline w-auto">
+                            <option value="Accepted">Accept</option>
+                            <option value="Rejected">Reject</option>
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-outline-success">Update</button>
+                    </form>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.AssignmentName</td>
-                    <td>@item.Subject</td>
-                    <td>@item.SubmissionDate.ToShortDateString()</td>
-                    <td>@item.TeacherName</td>
-                    <td>
-                        @if (!string.IsNullOrEmpty(item.FilePath))
-                        {
-                            <a class="btn btn-link" target="_blank" asp-controller="Assignment" asp-action="ViewFile" asp-route-path="@item.FilePath">View</a>
-                        }
-                        else
-                        {
-                            <span class="text-danger">No File</span>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+        }
+    </tbody>
+</table>

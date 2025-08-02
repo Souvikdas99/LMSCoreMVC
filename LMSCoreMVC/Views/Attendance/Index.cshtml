@@ -1,0 +1,38 @@
+﻿@model List<LMSCoreMVC.Models.Attendance>
+
+<h2>Attendance Records</h2>
+
+<form method="get" asp-action="Index" class="row mb-3">
+    <div class="col-md-3">
+        <label>Start Date</label>
+        <input type="date" name="startDate" class="form-control" value="@ViewBag.StartDate" />
+    </div>
+    <div class="col-md-3">
+        <label>End Date</label>
+        <input type="date" name="endDate" class="form-control" value="@ViewBag.EndDate" />
+    </div>
+    <div class="col-md-2 align-self-end">
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr>
+                <td>@record.StudentName</td>
+                <td>@record.Date.ToShortDateString()</td>
+                <td>@record.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,6 +1,7 @@
 ﻿using LMSCoreMVC.Data;
 using LMSCoreMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LMSCoreMVC.Controllers
 {
@@ -113,6 +114,6 @@ namespace LMSCoreMVC.Controllers
             return RedirectToAction("Login");
         }
 
-
+        }
+       
     }
-}

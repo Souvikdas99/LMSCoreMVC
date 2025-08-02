@@ -1,0 +1,32 @@
+﻿@model LMSCoreMVC.Models.Test
+
+<h2>Create Test</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label>Subject</label>
+        <input asp-for="Subject" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Test Date</label>
+        <input asp-for="TestDate" type="date" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Full Marks</label>
+        <input asp-for="FullMarks" type="number" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">Create Test</button>
+</form>

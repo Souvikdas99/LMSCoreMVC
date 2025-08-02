@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace LMSCoreMVC.Controllers
 {
     public class AssignmentController : Controller
@@ -18,70 +17,82 @@ namespace LMSCoreMVC.Controllers
             _env = env;
         }
 
-        // GET: Assignment
+        // List all assignments
         public async Task<IActionResult> Index()
         {
-            var assignments = await _context.Assignments.ToListAsync();
+            var assignments = await _context.Assignment.OrderByDescending(a => a.SubmittedAt).ToListAsync();
             return View(assignments);
         }
 
-        // POST: Assignment/Submit
+        // Show submit form
+        public IActionResult Submit()
+        {
+            return View();
+        }
+
+        // Handle submission
         [HttpPost]
         public async Task<IActionResult> Submit(Assignment assignment, IFormFile file)
         {
-            try
+            if (!ModelState.IsValid || file == null || file.Length == 0)
             {
-                if (!ModelState.IsValid || file == null || file.Length == 0)
-                {
-                    TempData["Success"] = "Invalid form submission or missing file.";
-                    return RedirectToAction("Index");
-                }
-
-                if (file.Length > 10 * 1024 * 1024) // 10 MB limit
-                {
-                    TempData["Success"] = "File size exceeds 10 MB.";
-                    return RedirectToAction("Index");
-                }
-
-                var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads");
-
-                if (!Directory.Exists(uploadsFolder))
-                    Directory.CreateDirectory(uploadsFolder);
-
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(file.FileName);
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(fileStream);
-                }
-
-                assignment.FilePath = "/uploads" + uniqueFileName;
-
-                _context.Assignments.Add(assignment);
-                await _context.SaveChangesAsync();
-
-                TempData["Success"] = "Assignment submitted successfully!";
-                return RedirectToAction("Index");
+                TempData["Error"] = "Please fill in all required fields and select a file to upload.";
+                return View(assignment);
             }
-            catch (Exception ex)
+
+            if (file.Length > 10 * 1024 * 1024)
             {
-                TempData["Success"] = $"Error occurred: {ex.Message}";
-                return RedirectToAction("Index");
+                TempData["Error"] = "File size exceeds 10 MB.";
+                return View(assignment);
             }
+
+            var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads");
+            if (!Directory.Exists(uploadsFolder))
+                Directory.CreateDirectory(uploadsFolder);
+
+            var fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(file.FileName);
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            assignment.FilePath = "/uploads/" + fileName;
+            assignment.SubmittedAt = DateTime.Now;
+            assignment.Status = "Pending";
+
+            _context.Assignment.Add(assignment);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Assignment submitted successfully!";
+            return RedirectToAction("Index");
         }
 
+        // Accept or Reject assignment
+        [HttpPost]
+        public async Task<IActionResult> UpdateStatus(int id, string status)
+        {
+            var assignment = await _context.Assignment.FindAsync(id);
+            if (assignment == null) return NotFound();
+
+            if (status == "Accepted" || status == "Rejected")
+            {
+                assignment.Status = status;
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        // Download file
         public IActionResult ViewFile(string path)
         {
             var fullPath = Path.Combine(_env.WebRootPath, path.TrimStart('/'));
-
-            if (!System.IO.File.Exists(fullPath))
-                return NotFound();
+            if (!System.IO.File.Exists(fullPath)) return NotFound();
 
             var fileBytes = System.IO.File.ReadAllBytes(fullPath);
-            var contentType = "application/octet-stream";
-
-            return File(fileBytes, contentType, Path.GetFileName(fullPath));
+            return File(fileBytes, "application/octet-stream", Path.GetFileName(fullPath));
         }
     }
 }

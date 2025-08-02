@@ -1,0 +1,39 @@
+﻿@model IEnumerable<LMSCoreMVC.Models.Assignment>
+
+<h2>All Submitted Assignments</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>File</th>
+            <th>Submitted At</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><a href="@item.FilePath" target="_blank">Download</a></td>
+                <td>@item.SubmittedAt.ToString("g")</td>
+                <td style="color: @(item.Status == "Accepted" ? "green" : item.Status == "Rejected" ? "red" : "black")">
+                    @item.Status
+                </td>
+                <td>
+                    <form asp-action="UpdateStatus" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="hidden" name="status" value="Accepted" />
+                        <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                    </form>
+                    <form asp-action="UpdateStatus" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="hidden" name="status" value="Rejected" />
+                        <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

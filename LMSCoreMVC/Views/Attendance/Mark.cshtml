@@ -1,0 +1,35 @@
+﻿@model LMSCoreMVC.Models.Attendance
+
+<h2>Mark Attendance</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<form asp-action="Mark" method="post">
+    <div class="form-group">
+        <label>Student Name</label>
+        <input asp-for="StudentName" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Date</label>
+        <input asp-for="Date" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+    </div>
+
+    <div class="form-group">
+        <label>Status</label>
+        <select asp-for="Status" class="form-control" required>
+            <option value="">--Select Status--</option>
+            <option>Present</option>
+            <option>Absent</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</form>
