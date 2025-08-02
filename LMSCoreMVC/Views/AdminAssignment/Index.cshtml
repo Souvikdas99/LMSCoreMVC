@@ -1,0 +1,61 @@
+﻿@model IEnumerable<LMSCoreMVC.Models.Assignment>
+@{
+    ViewData["Title"] = "Review Assignments";
+}
+
+<h2 class="mb-4">🧾 Review Assignments</h2>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Student</th>
+            <th>Subject</th>
+            <th>Assignment</th>
+            <th>Submitted At</th>
+            <th>Status</th>
+            <th>File</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var statusColor = item.Status switch
+            {
+                "Accepted" => "text-success",
+                "Rejected" => "text-danger",
+                _ => "text-secondary"
+            };
+
+            <tr>
+                <td>@item.StudentName</td>
+                <td>@item.Subject</td>
+                <td>@item.AssignmentName</td>
+                <td>@item.SubmittedAt.ToString("dd MMM yyyy")</td>
+                <td class="@statusColor"><strong>@item.Status</strong></td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.FilePath))
+                    {
+                        <a href="@item.FilePath" target="_blank">Download</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">No file</span>
+                    }
+                </td>
+                <td>
+                    <form method="post" asp-action="UpdateStatus" asp-controller="AdminAssignment" class="d-inline">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="hidden" name="status" value="Accepted" />
+                        <button class="btn btn-sm btn-success" type="submit">Accept</button>
+                    </form>
+                    <form method="post" asp-action="UpdateStatus" asp-controller="AdminAssignment" class="d-inline ms-1">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="hidden" name="status" value="Rejected" />
+                        <button class="btn btn-sm btn-danger" type="submit">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
