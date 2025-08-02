@@ -15,6 +15,6 @@ namespace LMSCoreMVC.Models
         [Required]
         public string Password { get; set; }
 
-        public string Role { get; set; } 
+        public string Role { get; set; } = "Student";
     }
 }
