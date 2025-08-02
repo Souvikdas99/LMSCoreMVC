@@ -20,7 +20,8 @@ namespace LMSCoreMVC.Models
         [Required]
         public string TeacherName { get; set; }
 
-        public string FilePath { get; set; }
+        public string? FilePath { get; set; }
+
 
         [Required]
         public string StudentName { get; set; }

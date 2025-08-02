@@ -23,7 +23,7 @@
             <th>Status</th>
             <th>Submitted At</th>
             <th>File</th>
-            <th>Action</th>
+           
         </tr>
     </thead>
     <tbody>
@@ -39,16 +39,7 @@
                 <td>
                     <a href="/Assignment/ViewFile?path=@a.FilePath" target="_blank">Download</a>
                 </td>
-                <td>
-                    <form asp-action="UpdateStatus" method="post">
-                        <input type="hidden" name="id" value="@a.Id" />
-                        <select name="status" class="form-control d-inline w-auto">
-                            <option value="Accepted">Accept</option>
-                            <option value="Rejected">Reject</option>
-                        </select>
-                        <button type="submit" class="btn btn-sm btn-outline-success">Update</button>
-                    </form>
-                </td>
+                
             </tr>
         }
     </tbody>

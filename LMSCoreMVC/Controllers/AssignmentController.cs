@@ -36,7 +36,8 @@ namespace LMSCoreMVC.Controllers
         {
             if (!ModelState.IsValid || file == null || file.Length == 0)
             {
-                TempData["Error"] = "Please fill in all required fields and select a file to upload.";
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                TempData["Error"] = "Form failed. Errors: " + string.Join(", ", errors);
                 return View(assignment);
             }
 
