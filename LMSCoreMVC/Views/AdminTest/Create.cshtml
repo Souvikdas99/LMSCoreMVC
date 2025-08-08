@@ -1,0 +1,14 @@
+﻿@model LMSCoreMVC.Models.Test
+@{
+    Layout = "_AdminLayout";
+}
+<div class="container mt-4">
+<h3>Create Test</h3>
+<form asp-action="Create" method="post">
+    <div class="mb-2"><label>Subject</label><input asp-for="Subject" class="form-control" /></div>
+    <div class="mb-2"><label>Scheduled At</label><input asp-for="ScheduledAt" type="datetime-local" class="form-control" /></div>
+    <div class="mb-2"><label>Duration (min)</label><input asp-for="DurationInMinutes" class="form-control" /></div>
+    <div class="mb-2"><label>Full Marks</label><input asp-for="FullMarks" class="form-control" /></div>
+    <button class="btn btn-primary">Create</button>
+</form>
+</div>

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<LMSCoreMVC.Models.StudentTest>
+@{
+    Layout = "_AdminLayout"; ViewData["Title"] = "Submissions"; var test = ViewBag.Test as LMSCoreMVC.Models.Test;
+}
+
+<div class="container mt-4">
+    <h3>Submissions — @test?.Subject</h3>
+
+    <table class="table table-striped">
+        <thead>
+            <tr><th>Student</th><th>Assigned</th><th>Status</th><th>Score</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model)
+            {
+                <tr>
+                    <td>@s.Student?.Username</td>
+                    <td>@s.AssignedDate.ToLocalTime()</td>
+                    <td>@s.Status</td>
+                    <td>@(s.Score?.ToString() ?? "-")</td>
+                    <td><a class="btn btn-sm btn-info" href="/AdminTest/Grade?studentTestId=@s.Id">View / Grade</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

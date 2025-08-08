@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LMSCoreMVC.Models
 {
+    [Table("Users")]
     public class User
     {
         public int Id { get; set; }
@@ -15,6 +17,6 @@ namespace LMSCoreMVC.Models
         [Required]
         public string Password { get; set; }
 
-        public string Role { get; set; } 
+        public string Role { get; set; } = "Student";
     }
 }

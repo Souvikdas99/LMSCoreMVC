@@ -1,0 +1,61 @@
+﻿@model LMSCoreMVC.Models.Test
+@{
+    var studentTest = ViewBag.StudentTest as LMSCoreMVC.Models.StudentTest;
+    ViewData["Title"] = "Take Test";
+}
+
+<div class="container mt-4">
+    <h3>@Model.Subject</h3>
+    <p><strong>Duration:</strong> @Model.DurationInMinutes minutes</p>
+
+    <div id="timer" class="alert alert-info">Time left: @Model.DurationInMinutes:00</div>
+
+    <form id="testForm" method="post" asp-action="SubmitAnswers">
+        <input type="hidden" name="studentTestId" value="@studentTest.Id" />
+
+        @foreach (var q in Model.Questions.Take(20))
+        {
+            <div class="card mb-2 p-2">
+                <div><strong>@q.QuestionText</strong></div>
+                <div class="form-check mt-1">
+                    <input class="form-check-input" type="radio" name="q_@q.Id" value="A" id="q@q.Id_A" />
+                    <label class="form-check-label" for="q@q.Id_A">@q.OptionA</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="q_@q.Id" value="B" id="q@q.Id_B" />
+                    <label class="form-check-label" for="q@q.Id_B">@q.OptionB</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="q_@q.Id" value="C" id="q@q.Id_C" />
+                    <label class="form-check-label" for="q@q.Id_C">@q.OptionC</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="q_@q.Id" value="D" id="q@q.Id_D" />
+                    <label class="form-check-label" for="q@q.Id_D">@q.OptionD</label>
+                </div>
+            </div>
+        }
+
+        <button type="submit" class="btn btn-success mt-3">Submit Test</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        let totalSeconds = @Model.DurationInMinutes * 60;
+        const timerEl = document.getElementById('timer');
+
+        function updateTimer() {
+            const m = Math.floor(totalSeconds/60);
+            const s = totalSeconds % 60;
+            timerEl.innerText = `Time left: ${m}m ${s}s`;
+            if (totalSeconds <= 0) {
+                document.getElementById('testForm').submit();
+            }
+            totalSeconds--;
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+}

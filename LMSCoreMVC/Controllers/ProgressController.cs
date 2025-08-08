@@ -26,7 +26,7 @@ namespace LMSCoreMVC.Controllers
             var rejected = _context.Assignment.Count(a => a.StudentName == studentName && a.Status == "Rejected");
             var pending = totalAssignments - accepted - rejected;
 
-            
+            // 2. Test Score Average
 
             // 3. Attendance Percentage
             var totalDays = _context.Attendance.Count(a => a.StudentName == studentName);

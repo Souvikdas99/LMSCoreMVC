@@ -17,9 +17,22 @@ namespace LMSCoreMVC.Data
 
         public DbSet<Attendance> Attendance { get; set; }
 
-     
+        public DbSet<Test> Tests { get; set; }
+        public DbSet<TestQuestion> TestQuestions { get; set; }
+        public DbSet<StudentTest> StudentTests { get; set; }
+        public DbSet<TestSubmission> TestSubmissions { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            // Fix multiple cascade path issue
+            modelBuilder.Entity<TestSubmission>()
+                .HasOne(ts => ts.Question)
+                .WithMany()
+                .HasForeignKey(ts => ts.QuestionId)
+                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete loop
+        }
 
     }
 }

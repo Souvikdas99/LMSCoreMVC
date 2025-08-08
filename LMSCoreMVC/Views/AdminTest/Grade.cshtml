@@ -1,0 +1,27 @@
+﻿@model LMSCoreMVC.Models.StudentTest
+@{
+    Layout = "_AdminLayout"; ViewData["Title"] = "Grade";
+}
+
+<div class="container mt-4">
+    <h3>Grade — @Model.Student?.Username</h3>
+    <p><strong>Test:</strong> @Model.Test?.Subject</p>
+    <p><strong>Submitted:</strong> @(Model.SubmittedDate?.ToLocalTime().ToString("g") ?? "N/A")</p>
+
+    <h5>Answers</h5>
+    @foreach (var ans in Model.Submissions ?? Enumerable.Empty<LMSCoreMVC.Models.TestSubmission>())
+    {
+        <div class="card mb-2 p-2">
+            <div><strong>Q:</strong> @ans.Question?.QuestionText</div>
+            <div><strong>Selected:</strong> @ans.SelectedAnswer</div>
+            <div><strong>Correct:</strong> @ans.Question?.CorrectAnswer</div>
+        </div>
+    }
+
+    <form asp-action="SaveGrade" method="post" class="mt-3">
+        <input type="hidden" name="studentTestId" value="@Model.Id" />
+        <div class="mb-2"><label>Score</label><input type="number" name="score" class="form-control" min="0" value="@(Model.Score ?? 0)" /></div>
+        <button class="btn btn-success">Save</button>
+        <a class="btn btn-secondary" href="/AdminTest/Submissions?testId=@Model.TestId">Back</a>
+    </form>
+</div>

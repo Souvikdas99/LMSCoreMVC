@@ -1,0 +1,33 @@
+﻿@model IEnumerable<LMSCoreMVC.Models.StudentTest>
+@{
+    ViewData["Title"] = "My Tests";
+}
+<div class="container mt-4">
+<h3>My Tests</h3>
+<table class="table">
+    <thead><tr><th>Subject</th><th>Start</th><th>Duration</th><th>FullMarks</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody>
+        @foreach (var st in Model)
+        {
+            <tr>
+                <td>@st.Test.Subject</td>
+                <td>@st.Test.ScheduledAt.ToLocalTime()</td>
+                <td>@st.Test.DurationInMinutes</td>
+                <td>@st.Test.FullMarks</td>
+                <td>@st.Status</td>
+                <td>
+                    @if (st.Status == "Pending")
+                    {
+                        <a class="btn btn-sm btn-primary" href="/StudentTest/Begin?studentTestId=@st.Id">Start</a>
+                    }
+                    else
+                    {
+
+                        <span class="text-success">Submitted</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

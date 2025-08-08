@@ -1,0 +1,23 @@
+﻿@model LMSCoreMVC.Models.StudentTest
+@{
+    ViewData["Title"] = "Begin Test";
+}
+
+<div class="container mt-4">
+    <h3>Begin Test: @Model.Test.Subject</h3>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <form asp-action="BeginConfirmed" method="post">
+        <input type="hidden" name="studentTestId" value="@Model.Id" />
+        <div class="mb-3">
+            <label>Enter your username to confirm</label>
+            <input type="text" name="username" class="form-control" required />
+        </div>
+        <button class="btn btn-primary">Start Test</button>
+        <a class="btn btn-secondary" href="/StudentTest/MyTests">Cancel</a>
+    </form>
+</div>
