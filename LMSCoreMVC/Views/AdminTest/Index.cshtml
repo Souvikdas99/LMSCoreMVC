@@ -1,0 +1,25 @@
+﻿@model IEnumerable<LMSCoreMVC.Models.Test>
+@{
+    Layout = "_AdminLayout";
+}
+<h3>Tests</h3>
+<p><a class="btn btn-primary" href="/AdminTest/Create">Create Test</a></p>
+<table class="table table-sm">
+    <thead><tr><th>Subject</th><th>Start</th><th>Duration</th><th>Full Marks</th><th>Actions</th></tr></thead>
+    <tbody>
+        @foreach (var t in Model)
+        {
+            <tr>
+                <td>@t.Subject</td>
+                <td>@t.ScheduledAt.ToLocalTime()</td>
+                <td>@t.DurationInMinutes</td>
+                <td>@t.FullMarks</td>
+                <td>
+                    <a class="btn btn-sm btn-secondary" href="/AdminTest/EditQuestions?testId=@t.Id">Questions</a>
+                    <a class="btn btn-sm btn-info" href="/AdminTest/Assign?testId=@t.Id">Assign</a>
+                    <a class="btn btn-sm btn-success" href="/AdminTest/Submissions?testId=@t.Id">Submissions</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

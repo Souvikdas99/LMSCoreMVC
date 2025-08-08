@@ -27,8 +27,6 @@ namespace LMSCoreMVC.Controllers
             var pending = totalAssignments - accepted - rejected;
 
             // 2. Test Score Average
-            var scores = _context.TestResults.Where(t => t.StudentName == studentName).Select(t => t.Score).ToList();
-            var averageScore = scores.Any() ? scores.Average() : 0;
 
             // 3. Attendance Percentage
             var totalDays = _context.Attendance.Count(a => a.StudentName == studentName);
@@ -40,7 +38,6 @@ namespace LMSCoreMVC.Controllers
             ViewBag.Accepted = accepted;
             ViewBag.Rejected = rejected;
             ViewBag.Pending = pending;
-            ViewBag.AverageScore = averageScore;
             ViewBag.Attendance = attendancePercentage;
 
             return View();

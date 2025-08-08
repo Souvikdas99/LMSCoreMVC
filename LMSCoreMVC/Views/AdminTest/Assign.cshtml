@@ -1,0 +1,23 @@
+﻿@model IEnumerable<LMSCoreMVC.Models.User>
+@{
+    Layout = "_AdminLayout"; var test = ViewBag.Test as LMSCoreMVC.Models.Test;
+}
+<div class="container mt-4">
+<h3>Assign @test.Subject</h3>
+
+<form method="post" asp-action="Assign">
+    <input type="hidden" name="testId" value="@test.Id" />
+    <div class="row">
+        @foreach (var s in Model)
+        {
+            <div class="col-md-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="selectedStudentIds" value="@s.Id" id="s@s.Id" />
+                    <label class="form-check-label" for="s@s.Id">@s.Username (@s.Email)</label>
+                </div>
+            </div>
+        }
+    </div>
+    <button class="btn btn-primary mt-3">Assign</button>
+</form>
+</div>

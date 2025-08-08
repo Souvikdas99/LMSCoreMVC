@@ -1,22 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace LMSCoreMVC.Models
 {
     public class Test
     {
-        public int Id { get; set; }
+        [Key] public int Id { get; set; }
 
-        [Required]
-        public string Subject { get; set; }
+        [Required] public string Subject { get; set; } // AI, DataStructures, Cloud computing, Core Java, Machine Learning
 
-        [Required]
-        [DataType(DataType.Date)]
-        public DateTime TestDate { get; set; }
+        [Required] public DateTime ScheduledAt { get; set; } // UTC recommended
 
-        [Required]
-        public int FullMarks { get; set; }
+        [Required] public int DurationInMinutes { get; set; }
 
-        public string Description { get; set; }
+        [Required] public int FullMarks { get; set; }
+
+        public ICollection<TestQuestion> Questions { get; set; }
+        public ICollection<StudentTest> StudentTests { get; set; }
     }
 }

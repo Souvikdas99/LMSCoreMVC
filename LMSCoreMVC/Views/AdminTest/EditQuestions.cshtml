@@ -1,0 +1,29 @@
+﻿@model LMSCoreMVC.Models.Test
+@{
+    Layout = "_AdminLayout"; var test = Model;
+}
+<h3>Questions for @test.Subject</h3>
+
+<form asp-action="AddQuestion" method="post" class="mb-3">
+    <input type="hidden" name="TestId" value="@test.Id" />
+    <div class="mb-2"><input name="QuestionText" class="form-control" placeholder="Question" /></div>
+    <div class="row">
+        <div class="col"><input name="OptionA" class="form-control" placeholder="Option A" /></div>
+        <div class="col"><input name="OptionB" class="form-control" placeholder="Option B" /></div>
+    </div>
+    <div class="row mt-2">
+        <div class="col"><input name="OptionC" class="form-control" placeholder="Option C" /></div>
+        <div class="col"><input name="OptionD" class="form-control" placeholder="Option D" /></div>
+    </div>
+    <div class="mb-2 mt-2"><label>Correct (A/B/C/D)</label><input name="CorrectAnswer" class="form-control" /></div>
+    <button class="btn btn-sm btn-success">Add Question</button>
+</form>
+
+<h5>Existing</h5>
+@foreach (var q in test.Questions ?? Enumerable.Empty<LMSCoreMVC.Models.TestQuestion>())
+{
+    <div class="card mb-2 p-2">
+        <b>@q.QuestionText</b><div>A: @q.OptionA</div><div>B: @q.OptionB</div><div>C: @q.OptionC</div><div>D: @q.OptionD</div>
+        <small>Correct: @q.CorrectAnswer</small>
+    </div>
+}

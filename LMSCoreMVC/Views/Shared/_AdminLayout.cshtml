@@ -11,9 +11,15 @@
             <ul class="nav flex-column">
                 <li class="nav-item"><a class="nav-link text-white" href="/Admin/Dashboard">🏠 Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="/Admin/ManageSubjects">📚 Manage Subjects</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="#">🎓 Manage Students</a></li>
                 <li class="nav-item"><a class="nav-link text-white" asp-controller="AdminProgress" asp-action="Index">📋 Student Progress</a></li>
                 <li class="nav-item"><a class="nav-link text-white" asp-controller="AdminAssignment" asp-action="Index">📂 View Assignments</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="AdminTest" asp-action="Index">
+                        <i class="fas fa-file-alt"></i>
+                        <span>🧪 Tests</span>
+                    </a>
+                </li>
+
 
 
                 <li class="nav-item mt-3"><a class="nav-link text-danger" href="/Admin/Logout">🚪 Logout</a></li>
