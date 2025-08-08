@@ -53,13 +53,7 @@ namespace LMSCoreMVC.Controllers
             return View();
         }
 
-        public IActionResult Dashboard()
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("AdminEmail")))
-                return RedirectToAction("Login");
-
-            return View();
-        }
+      
 
         public IActionResult ManageSubjects()
         {
@@ -114,6 +108,41 @@ namespace LMSCoreMVC.Controllers
             return RedirectToAction("Login");
         }
 
+        public async Task<IActionResult> Dashboard()
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("AdminEmail")))
+                return RedirectToAction("Login");
+
+            var totalStudents = await _context.Users.CountAsync();
+            var totalAssignments = await _context.Assignment.CountAsync();
+            var totalSubjects = await _context.SubjectSelections.CountAsync();
+            var attendancePresent = await _context.Attendance.CountAsync(a => a.IsPresent);
+            var attendanceAbsent = await _context.Attendance.CountAsync(a => !a.IsPresent);
+            var accepted = await _context.Assignment.CountAsync(a => a.Status == "Accepted");
+            var rejected = await _context.Assignment.CountAsync(a => a.Status == "Rejected");
+            var pending = await _context.Assignment.CountAsync(a => a.Status == "Pending");
+
+            var topSubjects = _context.SubjectSelections
+                .GroupBy(s => s.SubjectName)
+                .Select(g => new { Name = g.Key, Count = g.Count() })
+                .OrderByDescending(s => s.Count)
+                .Take(5)
+                .ToList();
+
+            ViewBag.TotalStudents = totalStudents;
+            ViewBag.TotalAssignments = totalAssignments;
+            ViewBag.TotalSubjects = totalSubjects;
+            ViewBag.Present = attendancePresent;
+            ViewBag.Absent = attendanceAbsent;
+            ViewBag.Accepted = accepted;
+            ViewBag.Rejected = rejected;
+            ViewBag.Pending = pending;
+            ViewBag.TopSubjects = topSubjects;
+
+            return View();
         }
-       
+
+
     }
+
+}

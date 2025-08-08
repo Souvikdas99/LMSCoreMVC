@@ -1,7 +1,29 @@
 ﻿@{
     ViewData["Title"] = "Admin Dashboard";
-    Layout = "_AdminLayout"; 
+    Layout = "_AdminLayout";
 }
-<h2 class="mb-4">Welcome, @Context.Session.GetString("AdminUsername") 👨‍💼</h2>
 
-<p>This is your admin dashboard.</p>
+<h2 class="mb-4">📊 Admin Dashboard</h2>
+
+<div class="row text-center">
+    <div class="col-md-3"><div class="card p-3 shadow"><h4>👨‍🎓 Students</h4><p>@ViewBag.TotalStudents</p></div></div>
+    <div class="col-md-3"><div class="card p-3 shadow"><h4>📝 Assignments</h4><p>@ViewBag.TotalAssignments</p></div></div>
+    <div class="col-md-3"><div class="card p-3 shadow"><h4>📘 Subjects</h4><p>@ViewBag.TotalSubjects</p></div></div>
+    <div class="col-md-3"><div class="card p-3 shadow"><h4>📅 Present</h4><p>@ViewBag.Present</p></div></div>
+    <div class="col-md-3 mt-3"><div class="card p-3 shadow"><h4>❌ Absent</h4><p>@ViewBag.Absent</p></div></div>
+</div>
+
+<h4 class="mt-5">📋 Assignment Status</h4>
+<ul>
+    <li><strong>Accepted:</strong> @ViewBag.Accepted</li>
+    <li><strong>Rejected:</strong> @ViewBag.Rejected</li>
+    <li><strong>Pending:</strong> @ViewBag.Pending</li>
+</ul>
+
+<h4 class="mt-4">🔥 Most Selected Subjects</h4>
+<ul>
+    @foreach (var s in ViewBag.TopSubjects)
+    {
+        <li>@s.Name - @s.Count selections</li>
+    }
+</ul>

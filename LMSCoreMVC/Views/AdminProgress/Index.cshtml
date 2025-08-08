@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "All Student Progress";
     var progressList = ViewBag.StudentProgress;
+    Layout = "_AdminLayout";
 }
 
 <h2 class="mb-4">📊 All Student Progress</h2>
@@ -26,9 +27,16 @@
                 <td style="color: green">@student.Accepted</td>
                 <td style="color: red">@student.Rejected</td>
                 <td>@student.Pending</td>
-                <td>@Math.Round((double)student.AverageScore, 2)</td>
+
+                <!-- Show average score if exists, else show N/A -->
+                <td>
+                    @(student.GetType().GetProperty("AverageScore") != null
+                                    ? Math.Round((double)student.AverageScore, 2)
+                                    : "N/A")
+            </td>
+
                 <td>@student.AttendancePercentage %</td>
             </tr>
-        }
+                }
     </tbody>
 </table>

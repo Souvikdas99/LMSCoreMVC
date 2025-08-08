@@ -16,5 +16,8 @@ namespace LMSCoreMVC.Models
 
         [Required]
         public string Status { get; set; } // Present or Absent
+
+        public bool IsPresent { get; set; }
+
     }
 }

@@ -16,8 +16,9 @@
             <div class="bg-dark text-white p-3" style="width: 220px; height: 100vh;">
                 <h4 class="mb-4">LMS</h4>
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a class="nav-link text-white" href="/Dashboard">📊 Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="/Lectures/Index">🎓 Lectures</a></li>
+                    <li><a asp-controller="Dashboard" asp-action="Index" class="nav-link">📊 My Dashboard</a></li>
+
+              
                     <li class="nav-item">
                         <a class="nav-link text-white" asp-controller="Assignment" asp-action="Index">📂 Assignments</a>
                     </li>
@@ -30,7 +31,7 @@
                         <a class="nav-link text-white" href="/SubjectSelection/Index">📚 Subjects</a>
                     </li>
                     <li class="nav-item"><a class="nav-link text-white" href="/Attendance/Index">📅 Attendance</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="/Test/Index">🧪 Tests</a></li>
+                    
                    
                     <li class="nav-item mt-3"><a class="nav-link text-danger" href="/Account/Logout">🚪 Logout</a></li>
                     

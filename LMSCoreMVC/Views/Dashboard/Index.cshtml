@@ -1,9 +1,48 @@
-﻿@{
-    ViewData["Title"] = "Dashboard";
-    var username = Context.Session.GetString("Username");
-    var email = Context.Session.GetString("Email");
+﻿@model LMSCoreMVC.Models.StudentDashboardViewModel
+
+@{
+    ViewData["Title"] = "Student Dashboard";
+    Layout = "_Layout"; // or your custom student layout if you have one
 }
 
-<div class="container mt-5">
-    <h2>Welcome, @username!</h2>
+<div class="container mt-4">
+    <h2 class="mb-4">👋 Welcome, @Model.StudentName</h2>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">📄 Total Assignments</h5>
+                    <p class="card-text fs-4">@Model.TotalAssignments</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">📅 Days Present</h5>
+                    <p class="card-text fs-4">@Model.AttendanceCount</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">📝 Tests Attempted</h5>
+                    <p class="card-text fs-4">@Model.TestAttempted</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">📊 Average Score</h5>
+                    <p class="card-text fs-4">@Model.AverageScore%</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,0 +1,53 @@
+﻿@model List<LMSCoreMVC.Models.SubjectSelection>
+@{
+    ViewData["Title"] = "My Subjects";
+    Layout = "_Layout"; // or "_StudentLayout" if you have one
+}
+
+<h2>📘 My Selected Subjects</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<form asp-action="Select" method="post" class="mb-4">
+    <div class="form-group">
+        <label>Subject Name</label>
+        <input name="subjectName" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Credit Points</label>
+        <input name="creditPoints" type="number" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Add Subject</button>
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Credit Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subject in Model)
+            {
+                <tr>
+                    <td>@subject.SubjectName</td>
+                    <td>@subject.CreditPoints</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No subjects selected yet.</p>
+}
